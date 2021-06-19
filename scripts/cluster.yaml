@@ -1,0 +1,28 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: dev-cluster
+  region: us-west-2
+  version: "1.16"
+vpc:
+  id: vpc-04d814c551047c0a6
+  securityGroup: "sg-0dc6d3503d0cdf02b"
+  subnets:
+    public:
+      us-west-2a: { id: subnet-0316baffa527cc8e4 }
+      us-west-2b: { id: subnet-0e5b9b78addad99d5 }
+      us-west-2c: { id: subnet-0c528f0355c47c4fa }
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+iam:
+  serviceRoleARN: "arn:aws:iam::449034250885:role/EksClusterRole"
+managedNodeGroups:
+  - name: dev-nodes
+    minSize: 2
+    maxSize: 4
+    desiredCapacity: 3
+    volumeSize: 20
+    instanceType: t3.medium
+    iam:
+      instanceRoleARN: arn:aws:iam::449034250885:role/EksNodeRole
